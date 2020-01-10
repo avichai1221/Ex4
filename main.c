@@ -16,6 +16,7 @@ fgets(string, 500, stdin);
     node *root = setNull();
     makeTrie(string, root);
     printRootReverse(root);
+    free(root);
     }
     else
     {
@@ -23,6 +24,7 @@ fgets(string, 500, stdin);
         node *root = setNull();
         makeTrie(string, root);
         printRoot(root);
+        free(root);
     }
 
 
