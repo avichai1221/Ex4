@@ -9,7 +9,7 @@ int main( int argc ,char *argv[]) {
     char b2[]="all allo aloe an ant are alot ate be allot";
     char b3[]="abc bac bac abc abc ddd aa66a";*/
 
-   if(argc==1)
+   if(argc>1)
     {
 
 fgets(string, 500, stdin);
