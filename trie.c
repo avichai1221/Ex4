@@ -50,7 +50,7 @@ char* notChar (char a[])
 {
     char* help;
     int j=0;
-    help= (char*)malloc(sizeof(char)*strlen(a));
+    help= (char*)malloc(sizeof(char));
     if(help==NULL)
     {
         printf("error\n");
@@ -59,9 +59,26 @@ char* notChar (char a[])
     for (int i = 0; a[i] !='\0' ; i++)
     {
         if (a[i] >= 'A' && a[i] <= 'Z')
-            help[j++]=a[i]-'A'+'a';
+        {
+           help= realloc(help,strlen(help)+sizeof(char));
+            if(help==NULL)
+            {
+                printf("error\n");
+                exit(1);
+            }
+            help[j++] = a[i] - 'A' + 'a';
+        }
         if (a[i] >= 'a' && a[i] <= 'z')
-            help[j++]=a[i];
+        {
+           help= realloc(help,sizeof(char)+strlen(help));
+         //   printf("%d\n",strlen(help));
+            if(help==NULL)
+            {
+                printf("error\n");
+                exit(1);
+            }
+            help[j++] = a[i];
+        }
     }
     return help;
 }
@@ -100,7 +117,6 @@ void insert(node* root,char *key)
     int index;
 
     node* help = root;
-
     for (int i = 0; i < strlen(key); i++)
     {
         index = ((int)key[i] - (int)'a');
@@ -127,7 +143,7 @@ void printRoot (node* root)
     {
         if (root->children[i] != NULL)
         {
-            char* str = malloc(sizeof(char));
+            char* str =(char*)malloc(sizeof(char));
             printNode(root->children[i], str, 0);
             free(str);
         }
@@ -150,8 +166,8 @@ void printNode (node* currentNode, char* str, int length)
     {
         if (currentNode->children[i] != NULL)
         {
-            char* str2= realloc(str,sizeof(str)+sizeof(char));
-            printNode(currentNode->children[i], str2, length+1);
+            str= (char*)realloc(str,strlen(str)+sizeof(char));
+            printNode(currentNode->children[i], str, length+1);
         }
 
     }
@@ -162,11 +178,12 @@ void printNode (node* currentNode, char* str, int length)
 void printRootReverse (node* root)
 {
 
+
     for (int i = NUM_LETTES; i >=0; i--)
     {
         if (root->children[i] != NULL)
         {
-            char* str = malloc(sizeof(char));
+            char* str =(char*)malloc(sizeof(char));
             printNodeReverse(root->children[i], str, 0);
             free(str);
         }
@@ -175,7 +192,6 @@ void printRootReverse (node* root)
 
 void printNodeReverse (node* currentNode, char* str, int length)
 {
-
     str[length] = currentNode->letter;
     str[length+1] = '\0';
 
@@ -185,19 +201,19 @@ void printNodeReverse (node* currentNode, char* str, int length)
         printf("\t%ld\n", currentNode->count);
         currentNode->isEndOfWord = FALSE;
     }
-    for (int i = NUM_LETTES; i >=0; i--)
+    for(int i = NUM_LETTES; i >=0; i--)
     {
         if (currentNode->children[i] != NULL)
         {
-            char* str2= realloc(str,sizeof(str)+sizeof(char));
-            printNode(currentNode->children[i], str2, length+1);
+            str= (char*)realloc(str,strlen(str)+sizeof(char));
+            printNodeReverse(currentNode->children[i], str, length+1);
         }
 
     }
 
 }
 
-
+//void test()
 
 
 /*
