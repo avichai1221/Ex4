@@ -9,23 +9,37 @@ int main( int argc ,char *argv[]) {
     char b2[]="all allo aloe an ant are alot ate be allot";
     char b3[]="abc bac bac abc abc ddd aa66a";*/
 
-   if(argc>1)
+   if(argc!=1)
     {
+        node *root = setNull();
+        while(!feof (stdin))
+        {
+            fgets(string, 500, stdin);
 
-fgets(string, 500, stdin);
-    node *root = setNull();
-    makeTrie(string, root);
-    printRootReverse(root);
-    free(root);
+        makeTrie(string, root);
+
+
+        }
+        printRootReverse(root);
+        free(root);
+        fclose(stdin);
+
     }
     else {
-       fgets(string, 500, stdin);
        node *root = setNull();
-       makeTrie(string, root);
+      // fgets(string, 500, stdin);
+       while (!feof(stdin))
+       {
+        fgets(string,500,stdin);
+        makeTrie(string, root);
+        //   printRoot(root);
+
+
+
+       }
        printRoot(root);
        free(root);
-
-
+       fclose(stdin);
    }
 
     return 0;
