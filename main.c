@@ -12,9 +12,9 @@ int main( int argc ,char *argv[]) {
    if(argc!=1)
     {
         node *root = setNull();
-        while(!feof (stdin))
+        while( fgets(string, 500, stdin))
         {
-            fgets(string, 500, stdin);
+        //    fgets(string, 500, stdin);
 
         makeTrie(string, root);
 
@@ -28,9 +28,9 @@ int main( int argc ,char *argv[]) {
     else {
        node *root = setNull();
       // fgets(string, 500, stdin);
-       while (!feof(stdin))
+       while( fgets(string, 500, stdin))
        {
-        fgets(string,500,stdin);
+    //    fgets(string,500,stdin);
         makeTrie(string, root);
         //   printRoot(root);
 
