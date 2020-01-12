@@ -1,6 +1,6 @@
 #ifndef EX4_TRIE_H
 #define EX4_TRIE_H
-#endif //EX4_TRIE_H
+
 #include <string.h>
 #include <stdlib.h>
 #define NUM_LETTES 26
@@ -22,3 +22,5 @@ void printRoot (node* root);
 void printNode (node* currentNode, char* str, int length);
 void printRootReverse (node* root);
 void printNodeReverse (node* currentNode, char* str, int length);
+
+#endif //EX4_TRIE_H

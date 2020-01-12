@@ -15,25 +15,25 @@ void makeTrie (char b[],node* root)
     int i=0;
     for (int start=0; start < strlen(b); start++)
     {
-        if (b[start] != ' ')
-        {
-            help[i++] =b[start];
+        if (b[start] != ' ') {
+            help[i++] = b[start];
 
-        }
-        else
-        {
-            help[i] ='\0';
-            char* h=notChar(help);
-       insert(root, h);
-   //    printf("%s\n",h);
+        } else {
+            help[i] = '\0';
+            char *h = notChar(help);
+            insert(root, h);
             free(h);
-        i=0;
+            i = 0;
         }
+        if (start == strlen(b) - 1)
+        {
+        help[i] = '\0';
+        char *h = notChar(help);
+        insert(root, h);
+        free(h);
     }
-    char* h=notChar(help);
-    insert(root, h);
-  // printf("%s\n",h);
-    free(h);
+    }
+
     free(help);
 }
 
@@ -71,7 +71,7 @@ char* notChar (char a[])
         if (a[i] >= 'a' && a[i] <= 'z')
         {
            help= realloc(help,sizeof(char)+strlen(help));
-         //   printf("%d\n",strlen(help));
+
             if(help==NULL)
             {
                 printf("error\n");
@@ -115,14 +115,15 @@ node* setNull()
 void insert(node* root,char *key)
 {
     int index;
-
+    node* forHelp=setNull();
     node* help = root;
     for (int i = 0; i < strlen(key); i++)
     {
         index = ((int)key[i] - (int)'a');
         if (!help->children[index])
         {
-            help->children[index] = setNull();
+
+            help->children[index] =forHelp ;
             help->children[index]->letter=key[i];
         }
         help = help->children[index];
@@ -132,13 +133,12 @@ void insert(node* root,char *key)
     // mark the last node true (end word)
     help->isEndOfWord = TRUE;
     help->count++;
+    free(root);
+    free(forHelp);
 }
 
 void printRoot (node* root)
 {
-   // int i = 0;
-
-
     for (int i = 0; i < NUM_LETTES; i++)
     {
         if (root->children[i] != NULL)
@@ -160,7 +160,6 @@ void printNode (node* currentNode, char* str, int length)
     {
         printf("%s", str);
         printf("\t%ld\n", currentNode->count);
-        currentNode->isEndOfWord = FALSE;
     }
     for( int i = 0; i < NUM_LETTES; i++)
     {
@@ -171,7 +170,7 @@ void printNode (node* currentNode, char* str, int length)
         }
 
     }
-
+    free(str);
 }
 
 
@@ -193,49 +192,23 @@ void printRootReverse (node* root)
 void printNodeReverse (node* currentNode, char* str, int length)
 {
     str[length] = currentNode->letter;
-    str[length+1] = '\0';
+    str[length + 1] = '\0';
 
-    if(currentNode->isEndOfWord)
-    {
-        printf("%s", str);
-        printf("\t%ld\n", currentNode->count);
-        currentNode->isEndOfWord = FALSE;
-    }
-    for(int i = NUM_LETTES; i >=0; i--)
+    for (int i = NUM_LETTES; i >= 0; i--)
     {
         if (currentNode->children[i] != NULL)
         {
-            str= (char*)realloc(str,strlen(str)+sizeof(char));
-            printNodeReverse(currentNode->children[i], str, length+1);
+            str = (char *) realloc(str, strlen(str) + sizeof(char));
+            printNodeReverse(currentNode->children[i], str, length + 1);
         }
 
     }
+    if (currentNode->isEndOfWord)
+    {
+        str[length+1] = '\0';
+        printf("%s", str);
+        printf("\t%ld\n", currentNode->count);
+    }
+    free(str);
 
 }
-
-//void test()
-
-
-/*
-    if (root->isEndOfWord == TRUE)
-    {
-
-        printf("\t%d\n", root->count);
-        root->isEndOfWord == FALSE;
-    }
-    for (int i = 0; i <NUM_LETTES ; i++)
-    {
-
-        if(root->children[i]!=NULL)
-        {
-            mallochelp= realloc(mallochelp,sizeof(mallochelp)+sizeof(char));
-            if(mallochelp==NULL)
-            {
-                printf("error\n");
-                exit(1);
-            }
-            mallochelp[j++]=root->children[i]->letter;
-            print(root->children[i],mallochelp);
-        }
-    }
-*/
