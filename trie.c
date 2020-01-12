@@ -115,7 +115,6 @@ node* setNull()
 void insert(node* root,char *key)
 {
     int index;
-    node* forHelp=setNull();
     node* help = root;
     for (int i = 0; i < strlen(key); i++)
     {
@@ -123,7 +122,7 @@ void insert(node* root,char *key)
         if (!help->children[index])
         {
 
-            help->children[index] =forHelp ;
+            help->children[index] =setNull();
             help->children[index]->letter=key[i];
         }
         help = help->children[index];
@@ -134,7 +133,6 @@ void insert(node* root,char *key)
     help->isEndOfWord = TRUE;
     help->count++;
     free(root);
-    free(forHelp);
 }
 
 void printRoot (node* root)
