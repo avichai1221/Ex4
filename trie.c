@@ -143,7 +143,7 @@ void printRoot (node* root)
         {
             char* str =(char*)malloc(sizeof(char));
             printNode(root->children[i], str, 0);
-            free(str);
+        //    free(str);
         }
     }
 }
