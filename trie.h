@@ -1,6 +1,6 @@
 #ifndef EX4_TRIE_H
 #define EX4_TRIE_H
-
+#include <limits.h>
 #include <string.h>
 #include <stdlib.h>
 #define NUM_LETTES 26

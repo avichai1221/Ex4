@@ -27,11 +27,11 @@ void makeTrie (char b[],node* root)
         }
         if (start == strlen(b) - 1)
         {
-        help[i] = '\0';
-        char *h = notChar(help);
-        insert(root, h);
-        free(h);
-    }
+            help[i] = '\0';
+            char *h = notChar(help);
+            insert(root, h);
+            free(h);
+        }
     }
 
     free(help);
@@ -60,7 +60,7 @@ char* notChar (char a[])
     {
         if (a[i] >= 'A' && a[i] <= 'Z')
         {
-           help= realloc(help,strlen(help)+sizeof(char));
+            help= realloc(help,strlen(help)+sizeof(char));
             if(help==NULL)
             {
                 printf("error\n");
@@ -70,7 +70,7 @@ char* notChar (char a[])
         }
         if (a[i] >= 'a' && a[i] <= 'z')
         {
-           help= realloc(help,sizeof(char)+strlen(help));
+            help= realloc(help,sizeof(char)+strlen(help));
 
             if(help==NULL)
             {
@@ -132,7 +132,7 @@ void insert(node* root,char *key)
     // mark the last node true (end word)
     help->isEndOfWord = TRUE;
     help->count++;
-   
+
 }
 
 void printRoot (node* root)
@@ -168,7 +168,6 @@ void printNode (node* currentNode, char* str, int length)
         }
 
     }
-    free(str);
 }
 
 
@@ -207,6 +206,6 @@ void printNodeReverse (node* currentNode, char* str, int length)
         printf("%s", str);
         printf("\t%ld\n", currentNode->count);
     }
-    free(str);
+
 
 }
