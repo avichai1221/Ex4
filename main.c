@@ -19,7 +19,7 @@ int main( int argc ,char *argv[])
      {
          printRoot(root);
      }
-    //free(root);
+    free(root);
     fclose(stdin);
 
     return 0;

@@ -132,7 +132,7 @@ void insert(node* root,char *key)
     // mark the last node true (end word)
     help->isEndOfWord = TRUE;
     help->count++;
-    free(root);
+   
 }
 
 void printRoot (node* root)
@@ -143,7 +143,7 @@ void printRoot (node* root)
         {
             char* str =(char*)malloc(sizeof(char));
             printNode(root->children[i], str, 0);
-        //    free(str);
+            free(str);
         }
     }
 }
