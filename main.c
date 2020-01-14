@@ -23,7 +23,7 @@ int main( int argc ,char *argv[])
         {
            printRoot(root,maxWord);
         }
-      free(root);
+      freeRoot(root);
       fclose(stdin);
 
     return 0;
