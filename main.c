@@ -3,7 +3,7 @@
 
 int main( int argc ,char *argv[])
 {
-  char string[1000]="aa aaa aaaa";
+  char string[1000];
   int length=strlen(string);
   int maxWord=0;
    node *root = setNull();
