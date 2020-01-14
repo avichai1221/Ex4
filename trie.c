@@ -10,7 +10,6 @@ int makeTrie (char b[],node* root,int lengthB)
     int length=0;
     char* help=NULL;
     help= (char*)malloc(sizeof(char)*2*lengthB);
-    memset(help,0, sizeof(char)*2*lengthB);
     if(help==NULL)
     {
         printf("error\n");
@@ -40,7 +39,7 @@ int makeTrie (char b[],node* root,int lengthB)
         {
             help[i] = '\0';
             char *h = notChar(help,i);
-            for (int j = 0; h[j]!='\0' ;j++)
+            for (int j=0; h[j]!='\0' ;j++)
             {
                 length++;
             }
@@ -54,10 +53,6 @@ int makeTrie (char b[],node* root,int lengthB)
     return maxWord;
 }
 
-
-
-
-
 /*
  * this function check if we have chars that they no in a"b.
  * if we have the function remove them.
@@ -65,10 +60,11 @@ int makeTrie (char b[],node* root,int lengthB)
  */
 char* notChar (char a[],int i)
 {
-  //  int length= 2;
+
     char* help=NULL;
     int j=0;
     help= (char*)malloc(sizeof(char)*(i+1));
+    memset(help,0, sizeof(char)*(i+1));
     if(help==NULL)
     {
         printf("error\n");
@@ -78,31 +74,17 @@ char* notChar (char a[],int i)
     {
         if (a[i] >= 'A' && a[i] <= 'Z')
         {
-            /*length++;
-            help= realloc(help,length*sizeof(char));
-            if(help==NULL)
-            {
-                printf("error\n");
-                exit(1);
-            }*/
+
             help[j++] = a[i] - 'A' + 'a';
         }
         if (a[i] >= 'a' && a[i] <= 'z')
         {
-          /*  length++;
-            help= realloc(help,sizeof(char)*length);
 
-            if(help==NULL)
-            {
-                printf("error\n");
-                exit(1);
-            }*/
             help[j++] = a[i];
         }
     }
     return help;
 }
-
 
 /*
  * Returns first node-head
@@ -125,8 +107,6 @@ node* setNull()
 
     return head;
 }
-
-
 
 /*If not present, inserts
  * If the key is prefix of trie node, just marks leaf node
@@ -151,7 +131,7 @@ void insert(node* root,char *key,int length)
     // mark the last node true (end word)
     root->isEndOfWord = TRUE;
     root->count++;
-//free(help);
+
 }
 
 void printRoot (node* root,int maxWord)
@@ -164,10 +144,9 @@ void printRoot (node* root,int maxWord)
             printNode(root->children[i], str, 0);
 
         }
-       // free(root->children[i]);
     }
     free(str);
-   //
+
 }
 
 void printNode (node* currentNode, char* str, int length)
@@ -202,7 +181,6 @@ void printRootReverse (node* root,int maxWord)
         {
             printNodeReverse(root->children[i], str, 0);
         }
-      //  free(root->children[i]);
     }
 
     free(str);

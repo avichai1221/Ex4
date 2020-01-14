@@ -3,32 +3,28 @@
 
 int main( int argc ,char *argv[])
 {
-  char string[1000]="ala alad aladin aa aab ";
+  char string[1000]="aa aaa aaaa";
   int length=strlen(string);
   int maxWord=0;
    node *root = setNull();
-    memset(root,0, sizeof(char));
-    maxWord= makeTrie(string, root,length);
-   // printf("%d",maxWord);
-    printRoot(root,maxWord);
-printf("\n");
-    printRootReverse(root,maxWord);
-    freeRoot(root);
+   memset(root,0, sizeof(char));
 
-      /* while( fgets(string, INT_MAX, stdin))
+
+
+       while(fgets(string, 1000, stdin))
        {
-           makeTrie(string, root);
+           maxWord= makeTrie(string, root,length);
        }
       if(argc!=1)
        {
-           printRootReverse(root);
+           printRootReverse(root,maxWord);
        }
        else
         {
-            printRoot(root);
-        }*/
-     //  free(root);
-     //  fclose(stdin);
+           printRoot(root,maxWord);
+        }
+      free(root);
+      fclose(stdin);
 
     return 0;
 }
