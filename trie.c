@@ -1,40 +1,57 @@
+
 #include <stdio.h>
 #include "trie.h"
 /*
  * Reads the input and puts every word in the tree
  */
-void makeTrie (char b[],node* root)
+int makeTrie (char b[],node* root,int lengthB)
 {
-    char* help;
-    help= (char*)malloc(sizeof(char)*strlen(b));
+    int maxWord=0;
+    int length=0;
+    char* help=NULL;
+    help= (char*)malloc(sizeof(char)*2*lengthB);
+    memset(help,0, sizeof(char)*2*lengthB);
     if(help==NULL)
     {
         printf("error\n");
         exit(1);
     }
     int i=0;
-    for (int start=0; start < strlen(b); start++)
+    for (int start=0; start < lengthB; start++)
     {
         if (b[start] != ' ') {
             help[i++] = b[start];
 
         } else {
             help[i] = '\0';
-            char *h = notChar(help);
-            insert(root, h);
-            free(h);
+            char *h = notChar(help,i);
+            for (int j = 0; h[j] != '\0'; j++)
+            {
+            length++;
+            }
+            if (length>maxWord) maxWord=length;
+            insert(root, h,length);
+            length=0;
             i = 0;
+            free(h);
+
         }
-        if (start == strlen(b) - 1)
+        if (start == lengthB - 1)
         {
             help[i] = '\0';
-            char *h = notChar(help);
-            insert(root, h);
+            char *h = notChar(help,i);
+            for (int j = 0; h[j]!='\0' ;j++)
+            {
+                length++;
+            }
+            if (length>maxWord) maxWord=length;
+            insert(root, h,length);
             free(h);
         }
     }
 
     free(help);
+    return maxWord;
 }
 
 
@@ -46,11 +63,12 @@ void makeTrie (char b[],node* root)
  * if we have the function remove them.
  * if we have a big char the function change it to small char.
  */
-char* notChar (char a[])
+char* notChar (char a[],int i)
 {
-    char* help;
+  //  int length= 2;
+    char* help=NULL;
     int j=0;
-    help= (char*)malloc(sizeof(char));
+    help= (char*)malloc(sizeof(char)*(i+1));
     if(help==NULL)
     {
         printf("error\n");
@@ -60,23 +78,25 @@ char* notChar (char a[])
     {
         if (a[i] >= 'A' && a[i] <= 'Z')
         {
-            help= realloc(help,strlen(help)+sizeof(char));
+            /*length++;
+            help= realloc(help,length*sizeof(char));
             if(help==NULL)
             {
                 printf("error\n");
                 exit(1);
-            }
+            }*/
             help[j++] = a[i] - 'A' + 'a';
         }
         if (a[i] >= 'a' && a[i] <= 'z')
         {
-            help= realloc(help,sizeof(char)+strlen(help));
+          /*  length++;
+            help= realloc(help,sizeof(char)*length);
 
             if(help==NULL)
             {
                 printf("error\n");
                 exit(1);
-            }
+            }*/
             help[j++] = a[i];
         }
     }
@@ -112,40 +132,42 @@ node* setNull()
  * If the key is prefix of trie node, just marks leaf node
  * update the counter if the word exist
  */
-void insert(node* root,char *key)
+void insert(node* root,char *key,int length)
 {
+  //  node*test=setNull();
     int index;
-    node* help = root;
-    for (int i = 0; i < strlen(key); i++)
+    for (int i = 0; i <length; i++)
     {
         index = ((int)key[i] - (int)'a');
-        if (!help->children[index])
+        if (!root->children[index])
         {
 
-            help->children[index] =setNull();
-            help->children[index]->letter=key[i];
+            root->children[index] =setNull();
+            root->children[index]->letter=key[i];
         }
-        help = help->children[index];
+        root = root->children[index];
     }
 
-
     // mark the last node true (end word)
-    help->isEndOfWord = TRUE;
-    help->count++;
-
+    root->isEndOfWord = TRUE;
+    root->count++;
+//free(help);
 }
 
-void printRoot (node* root)
+void printRoot (node* root,int maxWord)
 {
+    char* str =(char*)malloc(sizeof(char)*(maxWord+1));
     for (int i = 0; i < NUM_LETTES; i++)
     {
         if (root->children[i] != NULL)
         {
-            char* str =(char*)malloc(sizeof(char));
             printNode(root->children[i], str, 0);
-            free(str);
+
         }
+       // free(root->children[i]);
     }
+    free(str);
+   //
 }
 
 void printNode (node* currentNode, char* str, int length)
@@ -163,7 +185,6 @@ void printNode (node* currentNode, char* str, int length)
     {
         if (currentNode->children[i] != NULL)
         {
-            str= (char*)realloc(str,strlen(str)+sizeof(char));
             printNode(currentNode->children[i], str, length+1);
         }
 
@@ -171,19 +192,21 @@ void printNode (node* currentNode, char* str, int length)
 }
 
 
-void printRootReverse (node* root)
+void printRootReverse (node* root,int maxWord)
 {
+    char* str =(char*)malloc(sizeof(char)*(maxWord+1));
 
-
-    for (int i = NUM_LETTES; i >=0; i--)
+    for (int i = NUM_LETTES-1; i >=0; i--)
     {
         if (root->children[i] != NULL)
         {
-            char* str =(char*)malloc(sizeof(char));
             printNodeReverse(root->children[i], str, 0);
-            free(str);
         }
+      //  free(root->children[i]);
     }
+
+    free(str);
+
 }
 
 void printNodeReverse (node* currentNode, char* str, int length)
@@ -191,11 +214,10 @@ void printNodeReverse (node* currentNode, char* str, int length)
     str[length] = currentNode->letter;
     str[length + 1] = '\0';
 
-    for (int i = NUM_LETTES; i >= 0; i--)
+    for (int i = NUM_LETTES-1; i >= 0; i--)
     {
         if (currentNode->children[i] != NULL)
         {
-            str = (char *) realloc(str, strlen(str) + sizeof(char));
             printNodeReverse(currentNode->children[i], str, length + 1);
         }
 
@@ -208,4 +230,14 @@ void printNodeReverse (node* currentNode, char* str, int length)
     }
 
 
+}
+
+void freeRoot (node* root)
+{
+    if (root==NULL) return;
+        for (int i = 0; i < NUM_LETTES; i++)
+    {
+        freeRoot(root->children[i]);
+    }
+free(root);
 }

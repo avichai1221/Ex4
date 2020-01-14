@@ -3,12 +3,19 @@
 
 int main( int argc ,char *argv[])
 {
+  char string[1000]="ala alad aladin aa aab ";
+  int length=strlen(string);
+  int maxWord=0;
+   node *root = setNull();
+    memset(root,0, sizeof(char));
+    maxWord= makeTrie(string, root,length);
+   // printf("%d",maxWord);
+    printRoot(root,maxWord);
+printf("\n");
+    printRootReverse(root,maxWord);
+    freeRoot(root);
 
-  char string[INT_MAX];
-    node *root = setNull();
-    makeTrie(string, root);
-
-       while( fgets(string, INT_MAX, stdin))
+      /* while( fgets(string, INT_MAX, stdin))
        {
            makeTrie(string, root);
        }
@@ -19,9 +26,9 @@ int main( int argc ,char *argv[])
        else
         {
             printRoot(root);
-        }
-       free(root);
-       fclose(stdin);
+        }*/
+     //  free(root);
+     //  fclose(stdin);
 
     return 0;
 }
