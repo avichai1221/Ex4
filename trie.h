@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #define NUM_LETTES 26
+#define NUM_MAX 1000
 
 typedef enum {FALSE=0, TRUE=1} boolean;
 typedef struct node {
